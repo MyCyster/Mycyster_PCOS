@@ -1,6 +1,4 @@
-
-
-import { Navbar } from "./Navbar"
+import { Navbar } from "../Navbar"
 
 export const Home = () => {
   return (

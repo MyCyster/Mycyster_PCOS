@@ -1,5 +1,5 @@
 import './App.css'
-import { Home } from './LandingHome/Home'
+import { Home } from './components/LandingHome/Home'
 
 function App() {
 
