@@ -1,9 +1,9 @@
-import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
+
 import { MdOutlineEmail } from "react-icons/md";
 import youngAdult from "../../assets/Image.png";
 import featuredIcon from "../../assets/Featured icon.png";
+import { Link } from "react-router-dom";
 
 function ResetPassword() {
   function handleSubmit(e) {
@@ -43,7 +43,9 @@ function ResetPassword() {
           </button>
           <div className="flex gap-2 items-center text-[#057B7B] font-semibold">
             <FaArrowLeft />
-            <p>Back to login</p>
+            <Link to={"/login"}>
+              <p>Back to login</p>
+            </Link>
           </div>
         </form>
       </div>
