@@ -23,10 +23,11 @@ export const Navbar = () => {
         
         {isOpen && (
           <div className="absolute top-16 left-0 w-full bg-white shadow-md flex flex-col items-center md:hidden">
-            <a href="#features" className="py-2 text-gray-700 hover:text-teal-600">Features</a>
-            <a href="#resources" className="py-2 text-gray-700 hover:text-teal-600">Resources</a>
-            <a href="#community" className="py-2 text-gray-700 hover:text-teal-600">Join the Community</a>
-            <button className="bg-teal-500 text-white px-4 py-2 rounded-md mt-2">Get Started</button>
+            <a href="#features" className="py-1 sm:py-2 text-gray-700 hover:text-teal-600">Features</a>
+            <a href="#resources" className="py-1 sm:py-2 text-gray-700 hover:text-teal-600">Resources</a>
+            <a href="#community" className="py-1 sm:py-2 text-gray-700 hover:text-teal-600">Join the Community</a>
+            <Button className='my-2 px-7 py-[10px] sm:py-2 bg-[#057B7B] text-[#ffffff]'>Get Started</Button>
+            {/* <button className="bg-[#057B7B] text-white px-4 py-2 rounded-md my-2">Get Started</button> */}
           </div>
         )}
       </nav>
