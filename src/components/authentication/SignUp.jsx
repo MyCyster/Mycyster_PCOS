@@ -223,7 +223,7 @@ function SignUp() {
 
           <p className="text-[#475467] lg:mt-0 -mt-4">
             Already have an account?{" "}
-            <Link to={"/login"}>
+            <Link to={"/auth/login"}>
               {" "}
               <span className="text-[#069494]">Sign in</span>
             </Link>

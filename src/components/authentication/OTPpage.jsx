@@ -68,22 +68,25 @@ function OTPpage() {
   }
 
   return (
-    <main className="grid grid-cols-2">
+    <main className="grid lg:grid-cols-2 grid-cols-1">
       <div className="py-10 flex flex-col items-center justify-center">
         <img src={mailIcon} alt="key" />
-        <h1 className="text-4xl font-bold text-[#101928] mt-3">
+        <h1 className="lg:text-4xl text-2xl font-bold text-[#101928] mt-3">
           Email verification
         </h1>
-        <p className="mt-3 text-center text-[#475467]">
+        <p className="mt-3 text-center text-[#475467] lg:block hidden">
           Input the 4-digit O.T.P. that has been sent to your <br /> registered
           email
         </p>
+        <p className="lg:mt-3 mt-1 text-center text-[#475467] block lg:hidden lg:px-0 px-4">
+          Input the 4-digit O.T.P. that has been sent to your registered email
+        </p>
 
         <form
-          className="flex flex-col justify-center items-center w-full mt-4 gap-6"
+          className="flex flex-col justify-center items-center w-full mt-4 gap-6 lg:px-0 px-4"
           onSubmit={handleSubmit}
         >
-          <div className="w-[55%] flex flex-row gap-4">
+          <div className="lg:w-[55%] w-full flex flex-row gap-4">
             {otp.map((digit, index) => (
               <div
                 key={index}
@@ -103,7 +106,7 @@ function OTPpage() {
             ))}
           </div>
 
-          <p className="text-[#475467] mr-20">
+          <p className="text-[#475467] lg:mr-20 lg:text-[16px] text-sm">
             Didn’t get an email?{" "}
             <span className="text-[#069494] cursor-pointer">
               Click here to resend
@@ -112,13 +115,13 @@ function OTPpage() {
 
           <button
             type="submit"
-            className="bg-[#057B7B] rounded-full py-4 px-[8rem] text-white font-semibold"
+            className="bg-[#057B7B] rounded-full lg:py-4 lg:px-[8rem] py-2 px-[4rem] text-white font-semibold"
           >
             Verify email
           </button>
         </form>
       </div>
-      <div>
+      <div className="lg:block hidden">
         <img src={youngAdult} alt="a young lady" />
       </div>
     </main>

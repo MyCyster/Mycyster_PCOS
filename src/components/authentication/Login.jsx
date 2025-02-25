@@ -26,7 +26,7 @@ function Login() {
       });
       setRememberMe(true);
     }
-  }, []);
+  }, [formData]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -80,7 +80,7 @@ function Login() {
         </div>
         <form
           action="#"
-          className="flex flex-col justify-center items-center w-full mt-10 gap-6 lg:px-0 px-4"
+          className="flex flex-col justify-center items-center w-full lg:mt-10 gap-6 lg:px-0 px-4"
           onSubmit={handleSubmit}
         >
           <div className="lg:w-[55%] w-full">
@@ -138,13 +138,13 @@ function Login() {
           </button>
           <p className="text-[#475467] lg:mt-0 -mt-4">
             Don't have an account?{" "}
-            <Link to={"/signup"}>
+            <Link to={"/auth/signup"}>
               <span className="text-[#069494]">Sign Up</span>
             </Link>
           </p>
         </form>
       </div>
-      <div className="">
+      <div className="lg:block hidden">
         <img src={youngAdult} alt="a young lady" />
       </div>
     </main>
