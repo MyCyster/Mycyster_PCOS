@@ -138,7 +138,7 @@ function Login() {
           </button>
           <p className="text-[#475467] lg:mt-0 -mt-4">
             Don't have an account?{" "}
-            <Link to={"/signup"}>
+            <Link to={"/auth/signup"}>
               <span className="text-[#069494]">Sign Up</span>
             </Link>
           </p>
