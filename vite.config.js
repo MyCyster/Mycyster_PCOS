@@ -1,8 +1,35 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
-
-// https://vite.dev/config/
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "tailwindcss";
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
-})
+  plugins: [react()],
+  css: {
+    postcss: {
+      plugins: [tailwindcss()],
+    },
+  },
+  build: {
+    rollupOptions: {
+      external: ["react-router-dom"], 
+    },
+  },
+  server: {
+    proxy: {
+      "/v1/auth/signup": {
+        target: "http://mycyster-backend.onrender.com",
+        changeOrigin: true,
+        secure: false,
+      },
+      "/v1/auth/login": {
+        target: "http://mycyster-backend.onrender.com",
+        changeOrigin: true,
+        secure: false,
+      },
+      "/v1/auth/verify-email": {
+        target: "http://mycyster-backend.onrender.com",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
+});
