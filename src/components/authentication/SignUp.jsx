@@ -79,7 +79,8 @@ function SignUp() {
         const data = await res.json();
         if (res.ok) {
           console.log(data);
-          navigate("/otppage", { state: { email: formData.email } });
+          // navigate("/otppage", { state: { email: formData.email } });
+          navigate("/successpage");
           setFormData({
             name: "",
             email: "",
@@ -91,6 +92,7 @@ function SignUp() {
         }
       } catch (error) {
         setErrorMessage("Network error, please try again.");
+        setErrorMessage(error);
       }
 
       setFormErrors({});
@@ -114,7 +116,7 @@ function SignUp() {
           <div className="flex-1 border-t border-[#F0F2F5]"></div>
         </div>
         <form
-          className="flex flex-col justify-center items-center w-full mt-10 gap-6 lg:px-0 px-4 "
+          className="flex flex-col justify-center items-center w-full lg:mt-10 gap-6 lg:px-0 px-4 "
           onSubmit={handleSubmit}
         >
           <div className="lg:w-[55%] w-full">
