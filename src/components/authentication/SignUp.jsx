@@ -92,6 +92,7 @@ function SignUp() {
         }
       } catch (error) {
         setErrorMessage("Network error, please try again.");
+        setErrorMessage(error);
       }
 
       setFormErrors({});
