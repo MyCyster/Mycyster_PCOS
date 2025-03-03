@@ -8,11 +8,11 @@ export default defineConfig({
       plugins: [tailwindcss()],
     },
   },
-  build: {
-    rollupOptions: {
-      external: ["react-router-dom"], 
-    },
-  },
+  // build: {
+  //   rollupOptions: {
+  //     external: ["react-router-dom"], 
+  //   },
+  // },
   server: {
     proxy: {
       "/v1/auth/signup": {
