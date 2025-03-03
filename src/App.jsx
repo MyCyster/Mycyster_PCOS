@@ -9,19 +9,19 @@ import AuthRoutes from "./components/authentication/Auth";
 // import SuccessPage from "./components/authentication/SuccessPage";
 // import SuccessPasswordChanged from "./components/authentication/SuccessPasswordChanged";
 import { Home } from "./components/LandingHome/Home";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <>
-      <Router>
+    <BrowserRouter>
+      {/* <Router> */}
         <Routes>
           <Route path="/" element={<Home />} />
 
           {AuthRoutes()}
         </Routes>
-      </Router>
-    </>
+      {/* </Router> */}
+    </BrowserRouter>
   );
 }
 
