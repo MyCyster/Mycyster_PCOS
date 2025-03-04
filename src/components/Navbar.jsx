@@ -28,10 +28,11 @@ export const Navbar = () => {
         </a>
       </div>
       {/* <button className="bg-[#057B7B] text-[#ffffff] rounded-full px-6 py-3 rounded-md hidden md:block text-[14px]">Get Started</button> */}
-      <Link to={"/auth/signup"}></Link>
-      <Button className="bg-[#ffffff] hidden md:block text-[#057B7B] ">
-        Get Started
-      </Button>
+      <Link to={"/auth/signup"}>
+        <Button className="bg-[#ffffff] hidden md:block text-[#057B7B] ">
+          Get Started
+        </Button>
+      </Link>
 
       <button
         onClick={() => setIsOpen(!isOpen)}
