@@ -79,8 +79,7 @@ function SignUp() {
         const data = await res.json();
         if (res.ok) {
           console.log(data);
-          // navigate("/otppage", { state: { email: formData.email } });
-          navigate("/successpage");
+          navigate("/auth/otppage", { state: { email: formData.email } });
           setFormData({
             name: "",
             email: "",
@@ -88,9 +87,13 @@ function SignUp() {
             confirmPassword: "",
           });
         } else {
-          setErrorMessage(data.message || "Signup failed");
+          if (data.message === "Email already in use") {
+            navigate("/auth/login");
+          } else {
+            setErrorMessage(data.message || "Signup failed");
+          }
         }
-      } catch (error) {
+      } catch {
         setErrorMessage("Network error, please try again.");
         setErrorMessage(error);
       }
@@ -223,7 +226,7 @@ function SignUp() {
 
           <p className="text-[#475467] lg:mt-0 -mt-4">
             Already have an account?{" "}
-            <Link to={"/login"}>
+            <Link to={"/auth/login"}>
               {" "}
               <span className="text-[#069494]">Sign in</span>
             </Link>

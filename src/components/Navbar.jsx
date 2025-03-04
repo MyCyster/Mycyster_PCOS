@@ -22,12 +22,12 @@ export const Navbar = () => {
           Features
         </a>
         <AnchorLink
-            spy={true}
-            smooth={true}
-            to="pcosSolution"
-            className="cursor-pointer"
-            >
-           Resources
+          spy={true}
+          smooth={true}
+          to="pcosSolution"
+          className="cursor-pointer"
+        >
+          Resources
         </AnchorLink>
         {/* <a href="#resources" className="">
           Resources
@@ -37,10 +37,11 @@ export const Navbar = () => {
         </a>
       </div>
       {/* <button className="bg-[#057B7B] text-[#ffffff] rounded-full px-6 py-3 rounded-md hidden md:block text-[14px]">Get Started</button> */}
-      <Link to={"/signup"}></Link>
-      <Button className="bg-[#ffffff] hidden md:block text-[#057B7B] ">
-        Get Started
-      </Button>
+      <Link to={"/auth/signup"}>
+        <Button className="bg-[#ffffff] hidden md:block text-[#057B7B] ">
+          Get Started
+        </Button>
+      </Link>
 
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -62,9 +63,9 @@ export const Navbar = () => {
             smooth={true}
             to="pcosSolution"
             className="cursor-pointer py-1 sm:py-2 text-gray-700 hover:text-teal-600"
-            >
-           Resources
-        </AnchorLink>
+          >
+            Resources
+          </AnchorLink>
           {/* <a
             href="#resources"
             className="py-1 sm:py-2 text-gray-700 hover:text-teal-600"
@@ -77,7 +78,7 @@ export const Navbar = () => {
           >
             Join the Community
           </a>
-          <Link to={"/signup"}>
+          <Link to={"/auth/signup"}>
             <Button className="my-2 px-7 py-[10px] sm:py-2 bg-[#057B7B] text-[#ffffff]">
               Get Started
             </Button>
