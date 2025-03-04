@@ -2,6 +2,7 @@ import myCystLogo from "../assets/LandingHome/MyCysterLogo.png";
 import { useState } from "react";
 import { Button } from "./Button";
 import { Link } from "react-router-dom";
+import { Link as AnchorLink } from "react-scroll";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,9 +21,17 @@ export const Navbar = () => {
         <a href="#features" className="">
           Features
         </a>
-        <a href="#resources" className="">
+        <AnchorLink
+            spy={true}
+            smooth={true}
+            to="pcosSolution"
+            className="cursor-pointer"
+            >
+           Resources
+        </AnchorLink>
+        {/* <a href="#resources" className="">
           Resources
-        </a>
+        </a> */}
         <a href="#community" className="">
           Join the Community
         </a>
@@ -48,12 +57,20 @@ export const Navbar = () => {
           >
             Features
           </a>
-          <a
+          <AnchorLink
+            spy={true}
+            smooth={true}
+            to="pcosSolution"
+            className="cursor-pointer py-1 sm:py-2 text-gray-700 hover:text-teal-600"
+            >
+           Resources
+        </AnchorLink>
+          {/* <a
             href="#resources"
             className="py-1 sm:py-2 text-gray-700 hover:text-teal-600"
           >
             Resources
-          </a>
+          </a> */}
           <a
             href="#community"
             className="py-1 sm:py-2 text-gray-700 hover:text-teal-600"

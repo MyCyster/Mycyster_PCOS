@@ -1,5 +1,4 @@
 import AuthRoutes from "./components/authentication/Auth";
-import SignUp from "./components/authentication/SignUp";
 
 import { Home } from "./components/LandingHome/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";

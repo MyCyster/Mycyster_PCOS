@@ -12,7 +12,6 @@ export const Footer = () => {
       <div className="relative">
         {/* Footer Top Section */}
         <div className="bg-[#069494] px-4 sm:px-[2rem] lg:px-[5rem] text-center sm:text-start flex justify-center sm:block text-white p-12  md:flex-row">
-          {/* Left: Text and CTA */}
           <div className="relative w-full sm:w-[52%] lg:w-[50%] md:text-left py-16">
             <h2 className="text-[26px] md:text-[32px] font-bold leading-snug">
               Ready to Take Control of Your PCOS Journey?
