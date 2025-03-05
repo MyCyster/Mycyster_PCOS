@@ -42,8 +42,13 @@ function Login() {
 
     setIsloading(true);
 
+    const apiBaseUrl =
+      import.meta.env.MODE === "development"
+        ? ""
+        : "https://mycyster-backend.onrender.com";
+
     try {
-      const res = await fetch(`/v1/auth/login`, {
+      const res = await fetch(`${apiBaseUrl}/v1/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,13 +73,11 @@ function Login() {
       setIsloading(false);
     }
     if (rememberMe) {
-      // store email in localStorage
       localStorage.setItem(
         "userData",
-        JSON.stringify({ email: formData.email, password: formData })
+        JSON.stringify({ email: formData.email, password: formData.password })
       );
     } else {
-      // Remove email from localStorage if unchecked
       localStorage.removeItem("userData");
     }
   }
@@ -151,6 +154,7 @@ function Login() {
                   type="checkbox"
                   checked={rememberMe}
                   onChange={() => setRememberMe(!rememberMe)}
+                  className="bg-transparent"
                 />
                 <p className="lg:text-[16px] text-sm">Remember me</p>
               </div>
