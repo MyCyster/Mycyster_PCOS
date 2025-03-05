@@ -42,22 +42,20 @@ function Login() {
 
     setIsloading(true);
 
-    const apiBaseUrl =
-      import.meta.env.MODE === "development"
-        ? ""
-        : "https://mycyster-backend.onrender.com";
-
     try {
-      const res = await fetch(`${apiBaseUrl}/v1/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
+      const res = await fetch(
+        `https://mycyster-backend.onrender.com/v1/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+          }),
+        }
+      );
       const data = await res.json();
 
       if (res.ok) {
@@ -67,8 +65,8 @@ function Login() {
           setErrorMessage(data.message);
         }
       }
-    } catch (error) {
-      console.log(error);
+    } catch {
+      setErrorMessage(`Network error, please try again.`);
     } finally {
       setIsloading(false);
     }

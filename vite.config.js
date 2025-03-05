@@ -10,26 +10,7 @@ export default defineConfig({
   },
   // build: {
   //   rollupOptions: {
-  //     external: ["react-router-dom"], 
+  //     external: ["react-router-dom"],
   //   },
   // },
-  server: {
-    proxy: {
-      "/v1/auth/signup": {
-        target: "http://mycyster-backend.onrender.com",
-        changeOrigin: true,
-        secure: false,
-      },
-      "/v1/auth/login": {
-        target: "http://mycyster-backend.onrender.com",
-        changeOrigin: true,
-        secure: false,
-      },
-      "/v1/auth/verify-email": {
-        target: "http://mycyster-backend.onrender.com",
-        changeOrigin: true,
-        secure: false,
-      },
-    },
-  },
 });
