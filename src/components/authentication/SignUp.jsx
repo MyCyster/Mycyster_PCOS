@@ -6,6 +6,8 @@ import { MdOutlineEmail } from "react-icons/md";
 import youngAdult from "../../assets/Image.png";
 import { Link, useNavigate } from "react-router-dom";
 import Spinner from "./Spinner";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -47,7 +49,7 @@ function SignUp() {
       errors.password = "Password is required";
     } else if (!passwordRegex.test(formData.password)) {
       errors.password =
-        "Must be at least 8 characters (one uppercase, one number,  one special character (e.g., @, !, #, $)).";
+        "Must be at least 8 characters (one uppercase, one number,  one special character (e.g., @, !, $)).";
     }
 
     // Confirm password validation
@@ -95,13 +97,16 @@ function SignUp() {
           });
         } else {
           if (data.message === "Email already in use") {
-            navigate("/auth/login");
+            toast.error("Already have an account");
+            setIsloading(false);
           } else {
-            setErrorMessage(data.message || "Signup failed");
+            toast.error(data.message || "Signup failed");
           }
         }
       } catch {
-        setErrorMessage("Network error, please try again.");
+        toast.error("Network error, please try again.");
+      } finally {
+        setIsloading(false);
       }
 
       setFormErrors({});
@@ -168,6 +173,7 @@ function SignUp() {
                 <p className="text-red-500">{formErrors.email}</p>
               )}
             </div>
+            <div className="absolute">{isLoading && <Spinner />}</div>
 
             <div className="lg:w-[60%] w-full">
               <label>Create password</label>
@@ -234,7 +240,7 @@ function SignUp() {
             >
               Sign Up
             </button>
-            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+            {/* */}
 
             <p className="text-[#475467] lg:mt-0 -mt-4">
               Already have an account?{" "}
@@ -244,7 +250,6 @@ function SignUp() {
               </Link>
             </p>
           </form>
-          <div className="absolute">{isLoading && <Spinner />}</div>
         </div>
       </div>
       <div className="hidden lg:block">

@@ -3,6 +3,8 @@ import youngAdult from "../../assets/Image.png";
 import mailIcon from "../../assets/Mail Icon.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import Spinner from "./Spinner";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function OTPpage() {
   const [otp, setOtp] = useState(["", "", "", ""]);
@@ -67,6 +69,9 @@ function OTPpage() {
       if (res.ok) {
         console.log(data);
         navigate("/auth/successpage");
+      } else {
+        toast.error(`Invalid code`);
+        setIsloading(false);
       }
     } catch (error) {
       console.log(error);

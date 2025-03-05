@@ -5,6 +5,8 @@ import { MdOutlineEmail } from "react-icons/md";
 import youngAdult from "../../assets/Image.png";
 import { Link, useNavigate } from "react-router-dom";
 import Spinner from "./Spinner";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -14,7 +16,6 @@ function Login() {
     password: "",
   });
   const [formError, setFormError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsloading] = useState(false);
 
   const [rememberMe, setRememberMe] = useState(false);
@@ -62,11 +63,11 @@ function Login() {
         navigate("/");
       } else {
         if (data.message === "Invalid email or password") {
-          setErrorMessage(data.message);
+          toast.error(data.message);
         }
       }
     } catch {
-      setErrorMessage(`Network error, please try again.`);
+      toast.error(`Network error, please try again.`);
     } finally {
       setIsloading(false);
     }
@@ -162,7 +163,7 @@ function Login() {
                 </small>
               </Link>
             </div>
-            {errorMessage && <p>{errorMessage}</p>}
+
             <button className="bg-[#057B7B] rounded-full lg:py-4 lg:px-[10rem] py-2 px-[6rem] text-white font-semibold">
               Sign In
             </button>

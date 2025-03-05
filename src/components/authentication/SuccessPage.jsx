@@ -5,7 +5,7 @@ import Successful from "../../assets/Successful.png";
 function SuccessPage() {
   return (
     <main className="grid lg:grid-cols-2 grid-cols-1">
-      <div className="py-10  px-2 flex flex-col items-center justify-center">
+      <div className="px-2 flex flex-col items-center justify-center">
         <img src={Successful} alt="key" />
         <h1 className="lg:text-4xl text-xl font-bold text-[#101928] mt-3">
           Account created!!
