@@ -13,14 +13,14 @@ function ResetPassword() {
     <main className="grid lg:grid-cols-2 grid-cols-1">
       <div className="py-10  flex flex-col items-center justify-center">
         <img src={featuredIcon} alt="key" />
-        <h1 className="lg:text-4xl text-2xl font-bold text-[#101928] mt-3">
+        <h1 className="lg:text-4xl text-xl font-bold text-[#101928] mt-3">
           Reset your password
         </h1>
         <p className="mt-3 text-xl text-center text-[#475467] lg:block hidden">
           Enter your email address and we’ll send you <br /> password reset
           instructions.
         </p>
-        <p className="lg:mt-3 mt-1 text-xl text-center text-[#475467] block lg:hidden lg:px-0 px-4">
+        <p className="lg:mt-3 mt-1 text-lg text-center text-[#475467] block lg:hidden lg:px-0 px-4">
           Enter your email address and we’ll send you password reset
           instructions.
         </p>
@@ -47,7 +47,7 @@ function ResetPassword() {
           </button>
           <div className="flex gap-2 items-center text-[#057B7B] font-semibold">
             <FaArrowLeft />
-            <Link to={"/login"}>
+            <Link to={"/auth/login"}>
               <p>Back to login</p>
             </Link>
           </div>

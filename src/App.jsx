@@ -1,15 +1,7 @@
 import AuthRoutes from "./components/authentication/Auth";
-// import Auth from "./components/authentication/Auth";
-// import Login from "./components/authentication/Login";
-// import NewPassword from "./components/authentication/NewPassword";
-// import OTPpage from "./components/authentication/OTPpage";
-// import ResetMessage from "./components/authentication/ResetMessage";
-// import ResetPassword from "./components/authentication/ResetPassword";
-// import SignUp from "./components/authentication/SignUp";
-// import SuccessPage from "./components/authentication/SuccessPage";
-// import SuccessPasswordChanged from "./components/authentication/SuccessPasswordChanged";
 import { Home } from "./components/LandingHome/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -17,10 +9,21 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-
-          {AuthRoutes()}
+          <Route path="/auth/*" element={<AuthRoutes />} />
         </Routes>
       </Router>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 }

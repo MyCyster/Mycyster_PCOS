@@ -19,7 +19,7 @@ function SuccessPasswordChanged() {
           log in.
         </p>
 
-        <Link to={"/login"}>
+        <Link to={"/auth/login"}>
           <button className="bg-[#057B7B] rounded-full lg:py-4 lg:px-[8rem] py-2 px-[4rem] text-white font-semibold mt-8">
             Back to Login
           </button>

@@ -28,7 +28,7 @@ function ResetMessage() {
         </button>
         <div className="flex gap-2 items-center text-[#057B7B] font-semibold">
           <FaArrowLeft />
-          <Link to={"/login"}>
+          <Link to={"/auth/login"}>
             <p>Back to login</p>
           </Link>
         </div>
