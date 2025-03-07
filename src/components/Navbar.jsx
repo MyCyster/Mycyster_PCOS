@@ -18,25 +18,28 @@ export const Navbar = () => {
       </div>
 
       <div className="hidden border border-[#057B7B] py-4 px-10 rounded-full text-[14px] lg:text-[16px] md:flex gap-[1.5rem] lg:gap-[4rem] xl:gap-[7rem] text-[#057B7B] bg-gradient-to-r from-white via-[#E3F4F4] to-[#A0CFCF] ">
-        <a href="#features" className="">
-          Features
-        </a>
         <AnchorLink
             spy={true}
             smooth={true}
             to="pcosSolution"
             className="cursor-pointer"
             >
-           Resources
+           Features
         </AnchorLink>
-        {/* <a href="#resources" className="">
+
+        <Link
+          onClick={() =>
+            window.open("https://medium.com/@mycyster", "_blank")
+          }
+        >
           Resources
-        </a> */}
-        <a href="#community" className="">
+        </Link>
+
+        <Link className="">
           Join the Community
-        </a>
+        </Link>
       </div>
-      {/* <button className="bg-[#057B7B] text-[#ffffff] rounded-full px-6 py-3 rounded-md hidden md:block text-[14px]">Get Started</button> */}
+
       <Link to={"/signup"}></Link>
       <Button className="bg-[#ffffff] hidden md:block text-[#057B7B] ">
         Get Started
@@ -51,39 +54,35 @@ export const Navbar = () => {
 
       {isOpen && (
         <div className="absolute top-16 left-0 w-full bg-white shadow-md flex flex-col items-center md:hidden">
-          <a
-            href="#features"
-            className="py-1 sm:py-2 text-gray-700 hover:text-teal-600"
-          >
-            Features
-          </a>
           <AnchorLink
             spy={true}
             smooth={true}
             to="pcosSolution"
             className="cursor-pointer py-1 sm:py-2 text-gray-700 hover:text-teal-600"
             >
-           Resources
-        </AnchorLink>
-          {/* <a
-            href="#resources"
+           Features
+          </AnchorLink>
+
+          <Link
+            onClick={() =>
+              window.open("https://medium.com/@mycyster", "_blank")
+            }
             className="py-1 sm:py-2 text-gray-700 hover:text-teal-600"
           >
             Resources
-          </a> */}
-          <a
-            href="#community"
+          </Link>
+
+          <Link
             className="py-1 sm:py-2 text-gray-700 hover:text-teal-600"
           >
             Join the Community
-          </a>
+          </Link>
+
           <Link to={"/signup"}>
             <Button className="my-2 px-7 py-[10px] sm:py-2 bg-[#057B7B] text-[#ffffff]">
               Get Started
             </Button>
           </Link>
-
-          {/* <button className="bg-[#057B7B] text-white px-4 py-2 rounded-md my-2">Get Started</button> */}
         </div>
       )}
     </nav>
