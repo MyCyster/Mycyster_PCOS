@@ -49,7 +49,6 @@ function OTPpage() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("OTP Entered:", otp.join(""));
     setIsloading(true);
     try {
       const res = await fetch(
@@ -67,16 +66,46 @@ function OTPpage() {
       );
       const data = await res.json();
       if (res.ok) {
-        console.log(data);
         navigate("/auth/successpage");
       } else {
-        toast.error(`Invalid code`);
+        toast.error(data.message || `Invalid code`);
         setIsloading(false);
       }
-    } catch (error) {
-      console.log(error);
+    } catch {
+      toast.error("Network error. Please try again");
+    } finally {
+      setIsloading(false);
     }
   }
+
+  // async function resendCode() {
+  //   try {
+  //     const res = await fetch(
+  //       `https://mycyster-backend.onrender.com/v1/auth/verify-email`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           email,
+  //           email_verification_code: otp.join(""),
+  //         }),
+  //       }
+  //     );
+  //     const data = await res.json();
+  //     if (res.ok) {
+  //       toast.success("A new OTP has been sent to your email");
+  //     } else {
+  //       toast.error(data.message || "Failed to resend OTP");
+  //       setIsloading(false);
+  //     }
+  //   } catch {
+  //     toast.error("Network error. Please try again");
+  //   } finally {
+  //     setIsloading(false);
+  //   }
+  // }
 
   return (
     <main className="grid lg:grid-cols-2 grid-cols-1">

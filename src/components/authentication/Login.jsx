@@ -134,7 +134,12 @@ function Login() {
                     setFormData({ ...formData, password: e.target.value })
                   }
                 />
-                <button onClick={() => setShowPassword(!showPassword)}>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowPassword(!showPassword);
+                  }}
+                >
                   {showPassword ? (
                     <FaEye size={30} color="#374151" />
                   ) : (

@@ -20,9 +20,11 @@ export const Footer = () => {
               Join MyCyster today and discover the support, resources, and
               community you need to thrive. It’s free to sign up!
             </p>
-            <Button className="bg-[#ffffff] font-semibold transition mt-6 text-[#069494]">
-              Get Started
-            </Button>
+            <Link to={"/auth/signup"}>
+              <Button className="bg-[#ffffff] font-semibold transition mt-6 text-[#069494]">
+                Get Started
+              </Button>
+            </Link>
           </div>
 
           {/* Right: Image */}
@@ -58,11 +60,10 @@ export const Footer = () => {
                 placeholder="Enter your email"
                 className="px-3 sm:px-4 py-1 sm:py-2 text-gray-600 bg-[#E9FFFF] outline-none placeholder:text-[14px]"
               />
-              <Link to={"/login"}>
-                <Button className="bg-[#069494] mt-2 sm:mt-0 sm:bg-[#ffffff] font-semibold transition hover:bg-[#069494] hover:text-[#ffffff] text-[#ffffff] sm:text-[#069494]">
-                  Get Started
-                </Button>
-              </Link>
+
+              <Button className="bg-[#069494] mt-2 sm:mt-0 sm:bg-[#ffffff] font-semibold transition hover:bg-[#069494] hover:text-[#ffffff] text-[#ffffff] sm:text-[#069494]">
+                Get Started
+              </Button>
             </div>
           </div>
         </div>

@@ -67,7 +67,6 @@ function SignUp() {
     e.preventDefault();
 
     if (validateForm()) {
-      console.log("Form submitted successfully", formData);
       setIsloading(true);
 
       try {
@@ -87,17 +86,16 @@ function SignUp() {
         );
         const data = await res.json();
         if (res.ok) {
-          console.log(data);
           navigate("/auth/otppage", { state: { email: formData.email } });
-          setFormData({
-            name: "",
-            email: "",
-            password: "",
-            confirmPassword: "",
-          });
         } else {
           if (data.message === "Email already in use") {
             toast.error("Already have an account");
+            setFormData({
+              name: "",
+              email: "",
+              password: "",
+              confirmPassword: "",
+            });
             setIsloading(false);
           } else {
             toast.error(data.message || "Signup failed");
@@ -189,7 +187,10 @@ function SignUp() {
                 />
                 <button
                   type="button"
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowPassword(!showPassword);
+                  }}
                 >
                   {showPassword ? (
                     <FaEye size={30} color="#374151" />
@@ -220,7 +221,10 @@ function SignUp() {
                 />
                 <button
                   type="button"
-                  onClick={() => setConfirmPassword(!confirmPassword)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setConfirmPassword(!confirmPassword);
+                  }}
                 >
                   {confirmPassword ? (
                     <FaEye size={30} color="#374151" />
