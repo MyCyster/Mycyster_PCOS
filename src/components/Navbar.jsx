@@ -73,9 +73,11 @@ export const Navbar = () => {
             Join the Community
           </Link>
 
-          <Button className="my-2 px-7 py-[10px] sm:py-2 bg-[#057B7B] text-[#ffffff]">
-            Get Started
-          </Button>
+          <Link to={"/auth/signup"}>
+            <Button className="my-2 px-7 py-[10px] sm:py-2 bg-[#057B7B] text-[#ffffff]">
+              Get Started
+            </Button>
+          </Link>
         </div>
       )}
     </nav>
