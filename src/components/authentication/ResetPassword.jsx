@@ -24,9 +24,13 @@ function ResetPassword() {
     e.preventDefault();
 
     if (!email) {
-      setError("input is required");
-    } else if (!emailValidation(email)) {
-      toast.error("Enter a valid email");
+      setError("Email is required");
+      return;
+    }
+
+    if (!emailValidation(email)) {
+      setError("Please enter a valid email address");
+      return;
     }
     setIsloading(true);
     try {
@@ -45,11 +49,15 @@ function ResetPassword() {
       const data = await res.json();
 
       if (res.ok) {
-        navigate("/auth/newpassword", { state: { email } });
-        console.log(data);
+        toast.success("Password reset email sent successfully!");
+        navigate("/auth/resetmessage", { state: { email } });
+      } else {
+        setError(data.message || "Failed to send reset link. Please try again");
+        toast.error(data.message || "Failed to send reset link");
       }
     } catch (err) {
-      console.log(err);
+      setError("Network error. Please check your connection and try again");
+      toast.error("Network error. Please try again later");
     } finally {
       setIsloading(false);
     }
@@ -97,8 +105,11 @@ function ResetPassword() {
               {error && <p className="text-red-500">{error}</p>}
             </div>
 
-            <button className="bg-[#057B7B] rounded-full lg:py-4 lg:px-[8rem] py-2 px-[4rem] text-white font-semibold">
-              Reset password
+            <button
+              className="bg-[#057B7B] rounded-full lg:py-4 lg:px-[8rem] py-2 px-[4rem] text-white font-semibold"
+              disabled={isLoading}
+            >
+              {isLoading ? "Processing..." : "Reset Password"}
             </button>
             <div className="flex gap-2 items-center text-[#057B7B] font-semibold">
               <FaArrowLeft />

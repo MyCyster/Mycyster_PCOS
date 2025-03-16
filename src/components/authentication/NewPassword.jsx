@@ -3,7 +3,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
 import youngAdult from "../../assets/Image.png";
 import featuredIcon from "../../assets/Featured icon.png";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Spinner from "./Spinner";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,12 +16,75 @@ function NewPassword() {
   const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState(false);
   const [isLoading, setIsloading] = useState(false);
+  const [errors, setErrors] = useState({
+    password: "",
+    confirmPassword: "",
+    general: "",
+  });
+
+  const { token } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const email = location.state?.email || "";
+
+  if (!email && !isLoading) {
+    toast.error(
+      "Email information missing. Please start the reset process again."
+    );
+    navigate("/auth/resetpassword");
+  }
+
+  const validatePassword = (password) => {
+    // Minimum 8 characters, at least one uppercase letter, one lowercase letter, and one number
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = {
+      password: "",
+      confirmPassword: "",
+      general: "",
+    };
+
+    // validate password
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+      valid = false;
+    } else if (!validatePassword(formData.password)) {
+      newErrors.password =
+        "Password must be at least 8 characters with uppercase, lowercase, and numbers";
+      valid = false;
+    }
+
+    // Validate confirm password
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = "Please confirm your password";
+      valid = false;
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
   async function handleSubmit(e) {
     e.preventDefault();
 
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsloading(true);
+
     try {
+      // In a real application, you'd get this token from the URL query parameters
+      // that are sent in the reset password link emailed to the user
+      // const resetToken =
+      // new URLSearchParams(location.search).get("token") || "9308982";
       const res = await fetch(
         `https://mycyster-backend.onrender.com/v1/auth/reset-password`,
         {
@@ -31,15 +94,30 @@ function NewPassword() {
           },
           body: JSON.stringify({
             email,
-            reset_password_token: "9308982",
+            reset_password_token: token,
             password: formData.password,
           }),
         }
       );
       const data = await res.json();
-      console.log(data);
+      if (res.ok) {
+        toast.success("Password reset successful!");
+        navigate("/auth/login");
+      } else {
+        setErrors({
+          ...errors,
+          general: data.message || "Failed to reset password. Please try again",
+        });
+        toast.error(data.message || "Failed to reset password.");
+      }
     } catch (error) {
-      console.log(error);
+      setErrors({
+        ...errors,
+        general: "Network error. Please check your connection and try again",
+      });
+      toast.error("Network error. Please try again");
+    } finally {
+      setIsloading(false);
     }
   }
   return (

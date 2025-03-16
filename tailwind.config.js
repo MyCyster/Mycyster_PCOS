@@ -29,6 +29,7 @@ export default {
     extend: {
       fontFamily: {
         manrope: ["Manrope", "sans-serif"],
+        sora: ["Sora", "sans-serif"],
       },
     },
   },

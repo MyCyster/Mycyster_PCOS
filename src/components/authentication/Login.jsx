@@ -15,33 +15,46 @@ function Login() {
     email: "",
     password: "",
   });
-  const [formError, setFormError] = useState(false);
-  const [isLoading, setIsloading] = useState(false);
-
+  const [formError, setFormError] = useState({
+    email: false,
+    password: false,
+  });
+  const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
   // load saved email from localstorage when component mounts
   useEffect(() => {
-    const savedData = JSON.parse(localStorage.getItem("userData"));
+    const savedData = localStorage.getItem("userData");
     if (savedData) {
-      setFormData({
-        ...formData,
-        email: savedData.email,
-        password: savedData.password,
-      });
-      setRememberMe(true);
+      try {
+        const parsedData = JSON.parse(savedData);
+        setFormData({
+          email: parsedData.email || "",
+          password: parsedData.password || "",
+        });
+        setRememberMe(true);
+      } catch (error) {
+        console.log("Error parsing saved user data:", error);
+        localStorage.removeItem("userData");
+      }
     }
-  }, [formData]);
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
 
+    const newFormError = {
+      email: !formData.email,
+      password: !formData.password,
+    };
+
+    setFormError(newFormError);
+
     if (!formData.email || !formData.password) {
-      setFormError(`input is required`);
       return;
     }
 
-    setIsloading(true);
+    setIsLoading(true);
 
     try {
       const res = await fetch(
@@ -60,24 +73,30 @@ function Login() {
       const data = await res.json();
 
       if (res.ok) {
+        // saved user data before navigating if "Remember Me" is checked
+        if (rememberMe) {
+          localStorage.setItem(
+            "userData",
+            JSON.stringify({
+              email: formData.email,
+              password: formData.password,
+            })
+          );
+        } else {
+          localStorage.removeItem("userData");
+        }
         navigate("/");
       } else {
-        if (data.message === "Invalid email or password") {
+        if (data.message) {
           toast.error(data.message);
+        } else {
+          toast.error("Login failed. Please try again.");
         }
       }
     } catch {
       toast.error(`Network error, please try again.`);
     } finally {
-      setIsloading(false);
-    }
-    if (rememberMe) {
-      localStorage.setItem(
-        "userData",
-        JSON.stringify({ email: formData.email, password: formData.password })
-      );
-    } else {
-      localStorage.removeItem("userData");
+      setIsLoading(false);
     }
   }
   return (
@@ -90,7 +109,10 @@ function Login() {
           </p>
           <div className="absolute">{isLoading && <Spinner />}</div>
 
-          <button className="flex items-center lg:px-[6rem] px-[2rem] py-2 font-semibold rounded-full gap-1 border-[0.5px] border-[#D0D5DD] mt-4">
+          <button
+            type="button"
+            className="flex items-center lg:px-[6rem] px-[2rem] py-2 font-semibold rounded-full gap-1 border-[0.5px] border-[#D0D5DD] mt-4"
+          >
             <FcGoogle />
             Login with Google
           </button>
@@ -104,11 +126,12 @@ function Login() {
             className="flex flex-col justify-center items-center w-full lg:mt-10 gap-6 lg:px-0 px-4"
             onSubmit={handleSubmit}
           >
-            <div className="lg:w-[55%] w-full">
-              <label htmlFor="#">Email</label>
+            <div className="lg:w-[60%] w-full">
+              <label htmlFor="email">Email</label>
               <div className="flex w-[100%] items-center border-[0.5px] border-[#D0D5DD] lg:p-4 p-2 mt-2 rounded-lg ">
                 <input
-                  type="text"
+                  id="email"
+                  type="email"
                   placeholder="Enter your email"
                   className="w-full outline-none bg-transparent"
                   value={formData.email}
@@ -118,14 +141,15 @@ function Login() {
                 />
                 <MdOutlineEmail size={30} color="#374151" />
               </div>
-              {formError && (
+              {formError.email && (
                 <small className="text-red-500">This field is required</small>
               )}
             </div>
-            <div className="lg:w-[55%] w-full">
-              <label htmlFor="#">Password</label>
+            <div className="lg:w-[60%] w-full">
+              <label htmlFor="password">Password</label>
               <div className="flex w-[100%] items-center border-[0.5px] border-[#D0D5DD] lg:p-4 p-2 mt-2 rounded-lg">
                 <input
+                  id="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   className="w-full outline-none bg-transparent"
@@ -135,8 +159,8 @@ function Login() {
                   }
                 />
                 <button
-                  onClick={(e) => {
-                    e.preventDefault();
+                  type="button"
+                  onClick={() => {
                     setShowPassword(!showPassword);
                   }}
                 >
@@ -147,20 +171,23 @@ function Login() {
                   )}
                 </button>
               </div>
-              {formError && (
+              {formError.password && (
                 <small className="text-red-500">This field is required</small>
               )}
             </div>
 
-            <div className="flex lg:w-[55%] w-full justify-between items-center -mt-4">
+            <div className="flex lg:w-[60%] w-full justify-between items-center -mt-4">
               <div className="flex items-center gap-2">
                 <input
+                  id="remember-me"
                   type="checkbox"
                   checked={rememberMe}
                   onChange={() => setRememberMe(!rememberMe)}
                   className="bg-transparent"
                 />
-                <p className="lg:text-[16px] text-sm">Remember me</p>
+                <label htmlFor="remember-me" className="lg:text-[16px] text-sm">
+                  Remember me
+                </label>
               </div>
               <Link to="/auth/reset">
                 <small className="text-[#069494] lg:text-[16px] text-sm">
@@ -169,7 +196,10 @@ function Login() {
               </Link>
             </div>
 
-            <button className="bg-[#057B7B] rounded-full lg:py-4 lg:px-[10rem] py-2 px-[6rem] text-white font-semibold">
+            <button
+              type="submit"
+              className="bg-[#057B7B] rounded-full lg:py-4 lg:px-[10rem] py-2 px-[6rem] text-white font-semibold"
+            >
               Sign In
             </button>
             <p className="text-[#475467] lg:mt-0 -mt-4">
