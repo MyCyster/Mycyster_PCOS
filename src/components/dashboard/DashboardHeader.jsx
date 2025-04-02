@@ -1,10 +1,9 @@
-import React from 'react'
 import { MdOutlineNotificationsNone } from "react-icons/md";
 import SearchBar from './SearchBar';
 
 export const DashboardHeader = () => {
   return (
-    <section className='hidden lg:flex justify-end items-center mt-6 gap-x-10 mb-6 w-full'>
+    <section className='flex justify-end items-center px-6 h-full gap-x-10 w-full shadow-sm'>
         <div className=''>
             <SearchBar/>
         </div>
