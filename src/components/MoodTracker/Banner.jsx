@@ -5,6 +5,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import ClipLoader from "react-spinners/ClipLoader";
 import "react-toastify/dist/ReactToastify.css";
+import { moodUrls } from './MoodService'
 
 
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGVjMTQxOS0zZDBiLTRkZTktODFhOS0zNWU5N2ExMDMwZWEiLCJlbWFpbCI6ImdlY2FyaTk1MTJAbWFjaG8zLmNvbSIsImlhdCI6MTc0MzEwMzQ5NCwiZXhwIjoxNzQzMjc2Mjk0fQ.cK3imKgwTeM3ElygPl8EFMgLcqJyc8E867ds_ihqlNw'
@@ -17,7 +18,7 @@ export const Banner = (props) => {
         const data = Object.fromEntries(formData.entries())
 
         try {
-            const response = await fetch("https://mycyster-backend.onrender.com/v1/mood-tracker", {
+            const response = await fetch(moodUrls.moodTracker, {
                 method: "POST",
                 headers: {
                 "Content-Type": "application/json",

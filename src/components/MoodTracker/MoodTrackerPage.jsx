@@ -21,13 +21,17 @@ export const MoodTrackerPage = () => {
     const [moodHistory, setMoodHistory] = useState([])
     const [historyUpdated, setHistoryUpdated] = useState(0)
     const [isFetching, setIsFetching] = useState(false)
-    const [logMoodClicked, setLogMoodClicked] = useState(false)
+    const [logMoodClicked, setLogMoodClicked] = useState(0)
     const [isMHFilterOpen, setIsMHFilterOpen] = useState(false)
     const [isMHFilterLoading, setIsMHFilterLoading] = useState(false)
+    const [queryParams, setQueryParams] = useState(new URLSearchParams({}).toString())
     const logMoodBtn = useRef(null)
     const dropdownRef = useRef(null);
 
    useEffect(() => {
+        const controller = new AbortController(); 
+        const signal = controller.signal;  
+
         const fetchData = async () => {
             if (!token) {
                 toast.error(`Not authenticated.`);
@@ -37,12 +41,13 @@ export const MoodTrackerPage = () => {
             setIsFetching(true)
     
             try {
-                const response = await fetch(moodUrls.moodHistory, {
+                const response = await fetch(`${moodUrls.moodHistory}?${queryParams}`, {
                     method: "GET",
                     headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
-                    }
+                    },
+                    signal: signal,
                 });
                 
                 const result = await response.json();
@@ -65,19 +70,30 @@ export const MoodTrackerPage = () => {
                 
                 setMoodHistory(transformedData);
             } catch (err) {
-                toast.error(err.message);
+                if (err.name === "AbortError") {
+                    console.log("Fetch request was aborted");
+                } else {
+                    toast.error(err.message);
+                }
             } finally {
                 setIsFetching(false)
+                setIsMHFilterLoading(false);
             }
         };
     
         fetchData();
-    }, [historyUpdated])
+        return () => {
+            controller.abort();  // Abort the request if the component is unmounted
+        };
+    }, [historyUpdated, queryParams])
 
     useEffect(() => {
-        if (logMoodBtn.current !== null) {
+        if (logMoodClicked > 0 && logMoodBtn.current !== null) {
             logMoodBtn.current.scrollIntoView({ behavior: "smooth", block: "start" })
         }
+        return () => {
+            setLogMoodClicked(0);  // Abort the request if the component is unmounted
+        };
     }, [logMoodClicked])
 
     useEffect(() => {
@@ -101,27 +117,9 @@ export const MoodTrackerPage = () => {
         setIsMHFilterLoading(true);
         const data = Object.fromEntries(formData.entries())
         const cleanedData = cleanObject(data)
-        const queryParams = new URLSearchParams(cleanedData).toString(); 
-        console.log('seeee', data, cleanedData, queryParams);
-        
-        try {
-            const response = await fetch(`${moodUrls.moodHistory}?${queryParams}`, {
-                method: "GET",
-                headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-                }
-            });
-
-            const result = await response.json();
-    
-            console.log('returned data', result);
-            toast.success(result.message);
-        } catch (err) {
-            toast.error(err.message);
-        } finally {
-            setIsMHFilterLoading(false);
-        }
+        const newQueryParams = new URLSearchParams(cleanedData).toString(); 
+        setQueryParams(newQueryParams)
+        console.log('seeee', data, cleanedData, newQueryParams);
     }
 
     const MoodTrendFilter = () => {
@@ -188,7 +186,7 @@ export const MoodTrackerPage = () => {
                     <svg className='m-auto' width="201" height="128">
                         <use xlinkHref="/icon-sprite.svg#emptyMoodState" />
                     </svg>
-                    {!isFetching && <Button onClick={() => setLogMoodClicked(prev => !prev)} className="bg-primary text-white border border-primary rounded-xl font-bold text-base mt-6 hover:shadow-lg hover:bg-primary-300">
+                    {!isFetching && <Button onClick={() => setLogMoodClicked(prev => prev + 1)} className="bg-primary text-white border border-primary rounded-xl font-bold text-base mt-6 hover:shadow-lg hover:bg-primary-300">
                         Log Mood
                     </Button>}
                 </div>
@@ -201,7 +199,7 @@ export const MoodTrackerPage = () => {
                     <svg className='m-auto' width="201" height="128">
                         <use xlinkHref="/icon-sprite.svg#emptyMoodState" />
                     </svg>
-                    {!isFetching && <Button onClick={() => setLogMoodClicked(prev => !prev)} className="bg-primary text-white border border-primary rounded-xl font-bold text-base mt-6 hover:shadow-lg hover:bg-primary-300">
+                    {!isFetching && <Button onClick={() => setLogMoodClicked(prev => prev + 1)} className="bg-primary text-white border border-primary rounded-xl font-bold text-base mt-6 hover:shadow-lg hover:bg-primary-300">
                         Log Mood
                     </Button>}
                 </div>
@@ -214,7 +212,7 @@ export const MoodTrackerPage = () => {
     };
 
     return (
-        <div className="ml-20 mr-8 my-4">
+        <>
             <h2 className='text-3xl font-bold py-4'>Mood Tracker</h2>
             <p className='text-2xl'>How are you feeling today?</p>
             <Banner updateHistory={() => setHistoryUpdated(prev => prev + 1)} ref={logMoodBtn}/>
@@ -228,6 +226,6 @@ export const MoodTrackerPage = () => {
                     emptyState={<MoodHistoryEmptyState type="history"/>}
                 />
             </MoodCard>
-        </div>
+        </>
     )
 }

@@ -1,4 +1,3 @@
-import React from 'react'
 import myCystLogo from "../../assets/LandingHome/MyCysterLogo.png"
 import { HiMiniBars3 } from "react-icons/hi2";
 import { NavLink } from 'react-router-dom'
@@ -6,8 +5,8 @@ import { NavLink } from 'react-router-dom'
 const links = [
   {name: "Home", path: "/dashboard"},
   {name: "Dietary Planner", path: "/dietaryplanner"},
-  {name: "Mood Tracker", path: "moodtracker"},
-  {name: "PCOS Resources", path: "pcosresources"},
+  {name: "Mood Tracker", path: "/moodtracker"},
+  {name: "PCOS Resources", path: "/pcosresources"},
   {name: "Profile", path: "/profile"}
 ]
 const getActiveLink = ({isActive}) =>{
@@ -18,7 +17,7 @@ const getActiveLink = ({isActive}) =>{
 export const SidebarNavigation = () => {
   
   return (
-    <aside className='flex flex-row justify-between mt-8 px-6  lg:flex-col lg:border-r lg:w-48 lg:justify-normal lg:pt-8 lg:mt-0'>
+    <aside className='flex flex-row justify-between mt-8 px-6 lg:flex-col lg:border-r lg:justify-normal lg:pt-8 lg:mt-0'>
       {/* logo */}
         <div>
             <img
