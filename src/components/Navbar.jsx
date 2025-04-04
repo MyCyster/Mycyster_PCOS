@@ -1,6 +1,6 @@
 import myCystLogo from "../assets/LandingHome/MyCysterLogo.png";
 import { useState } from "react";
-import { Button } from "./Button";
+import { Button } from "./shared/Button";
 import { Link } from "react-router-dom";
 import { Link as AnchorLink } from "react-scroll";
 

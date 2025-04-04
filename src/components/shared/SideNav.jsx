@@ -14,7 +14,7 @@ const getActiveLink = ({isActive}) =>{
   `font-manrope px-2 text-base  ${isActive? "text-[#FFFFFF] bg-[#069494] py-2  rounded-md font-bold" : "font-medium text-[#000000] "}`
   )
 }
-export const SidebarNavigation = () => {
+export const SideNav = () => {
   
   return (
     <aside className='flex flex-row justify-between mt-8 px-6 lg:flex-col lg:border-r lg:justify-normal lg:pt-8 lg:mt-0'>

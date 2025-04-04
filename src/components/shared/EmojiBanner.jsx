@@ -1,15 +1,15 @@
-import { Button } from "../Button";
-import { moodEmojis } from "./MoodData";
+import { Button } from "./Button";
+import { moodEmojis } from "../shared/MockData";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import ClipLoader from "react-spinners/ClipLoader";
 import "react-toastify/dist/ReactToastify.css";
-import { moodUrls } from './MoodService'
+import { moodUrls } from '../MoodTracker/MoodService'
 
 
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGVjMTQxOS0zZDBiLTRkZTktODFhOS0zNWU5N2ExMDMwZWEiLCJlbWFpbCI6ImdlY2FyaTk1MTJAbWFjaG8zLmNvbSIsImlhdCI6MTc0MzEwMzQ5NCwiZXhwIjoxNzQzMjc2Mjk0fQ.cK3imKgwTeM3ElygPl8EFMgLcqJyc8E867ds_ihqlNw'
-export const Banner = (props) => {
+export const EmojiBanner = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     
 
@@ -65,7 +65,7 @@ export const Banner = (props) => {
     )
 }
 
-Banner.propTypes = {
+EmojiBanner.propTypes = {
     updateHistory: PropTypes.func.isRequired,
     ref: PropTypes.oneOfType([
         PropTypes.func,

@@ -2,7 +2,7 @@ import footerImg from "../assets/LandingHome/FooterImg.png";
 import { CiTwitter } from "react-icons/ci";
 import { AiOutlineInstagram } from "react-icons/ai";
 import { LuFacebook } from "react-icons/lu";
-import { Button } from "./Button";
+import { Button } from "./shared/Button";
 import myCysterLogo from "../assets/LandingHome/MyCysterLogo.png";
 import { Link } from "react-router-dom";
 

@@ -5,6 +5,7 @@ import { MoodTrackerPage } from "./components/MoodTracker/MoodTrackerPage"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { AppHome } from "./components/AppHome"
+import { DietaryPlannerPage } from "./components/DietaryPlanner/DietaryPlannerPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/auth/*" element={<AuthRoutes />} />
           <Route path="/" element={<AppHome/>}>
             <Route path="dashboard" element={<HomeDashboard />} />
+            <Route path="dietaryplanner" element={<DietaryPlannerPage />} />
             <Route path="moodtracker" element={<MoodTrackerPage />} />
           </Route>
         </Routes>
