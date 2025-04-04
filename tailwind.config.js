@@ -60,8 +60,16 @@ export default {
       fontFamily: {
         manrope: ["Manrope", "sans-serif"],
         sora: ["Sora", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function({addUtilities}) {
+      addUtilities({
+        ".title": {"@apply text-2xl font-bold pt-4 font-inter": {}},
+        ".sub-title": {"@apply text-xl font-inter": {}}
+      })
+    }
+  ],
 };

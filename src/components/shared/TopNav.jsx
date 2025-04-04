@@ -1,7 +1,7 @@
 import { MdOutlineNotificationsNone } from "react-icons/md";
-import SearchBar from './SearchBar';
+import SearchBar from '../dashboard/SearchBar';
 
-export const DashboardHeader = () => {
+export const TopNav = () => {
   return (
     <section className='flex justify-end items-center px-6 h-full gap-x-10 w-full shadow-sm'>
         <div className=''>

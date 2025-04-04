@@ -94,3 +94,16 @@ export const moodBarColors = [
     "#1D3557",
     "#483D8B"
 ]
+
+export const meals = Array(4)
+    .fill(null)
+    .map(() => ({
+        image: {src:"src/assets/MealPlanner/Meal.png", alt: 'some image'},
+        mealType: "Breakfast",
+        calories: "800 Calories",
+        mealName: "Plaintain and omelette",
+        protein: '25g protein',
+        fats: '30g fats',
+        carbohydrates: '20g carbohydrates'
+
+    }));

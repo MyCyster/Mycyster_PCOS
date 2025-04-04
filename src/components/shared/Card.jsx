@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-export const MoodCard = (props) => {
+export const Card = (props) => {
     return (
         <div className="my-6">
             <div className="border rounded-t-lg flex justify-between py-5 px-6">
@@ -18,7 +18,7 @@ export const MoodCard = (props) => {
     )
 }
 
-MoodCard.propTypes = {
+Card.propTypes = {
     cardTitle: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired,
     cardAction: PropTypes.node
