@@ -1,6 +1,6 @@
 import heroImg from "../../assets/LandingHome/mycystHeroImg.svg";
 import heroFlower from "../../assets/LandingHome/heroFlower.png";
-import { Button } from "../Button";
+import { Button } from "../shared/Button";
 import { Link } from "react-router-dom";
 
 export const Hero = () => {
