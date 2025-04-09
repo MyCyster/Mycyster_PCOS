@@ -17,7 +17,7 @@ function AuthRoutes() {
       <Route path="otppage" element={<OTPpage />} />
       <Route path="successpage" element={<SuccessPage />} />
       <Route path="resetmessage" element={<ResetMessage />} />
-      <Route path="newpassword" element={<NewPassword />} />
+      <Route path="reset-password/:token" element={<NewPassword />} />
       <Route path="successpassword" element={<SuccessPasswordChanged />} />
     </Routes>
   );

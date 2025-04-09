@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
 import youngAdult from "../../assets/Image.png";
@@ -23,16 +23,11 @@ function NewPassword() {
   });
 
   const { token } = useParams();
+
   const location = useLocation();
   const navigate = useNavigate();
-  const email = location.state?.email || "";
-
-  if (!email && !isLoading) {
-    toast.error(
-      "Email information missing. Please start the reset process again."
-    );
-    navigate("/auth/resetpassword");
-  }
+  const queryParams = new URLSearchParams(location.search);
+  const email = location.state?.email || queryParams.get("email") || "";
 
   const validatePassword = (password) => {
     // Minimum 8 characters, at least one uppercase letter, one lowercase letter, and one number
@@ -74,17 +69,13 @@ function NewPassword() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!validateForm()) {
-      return;
-    }
-
+    // if (!validateForm()) {
+    //   return toast.error("Enter a new password");
+    // }
     setIsloading(true);
 
     try {
-      // In a real application, you'd get this token from the URL query parameters
-      // that are sent in the reset password link emailed to the user
-      // const resetToken =
-      // new URLSearchParams(location.search).get("token") || "9308982";
+      console.log(token);
       const res = await fetch(
         `https://mycyster-backend.onrender.com/v1/auth/reset-password`,
         {
@@ -110,7 +101,7 @@ function NewPassword() {
         });
         toast.error(data.message || "Failed to reset password.");
       }
-    } catch (error) {
+    } catch {
       setErrors({
         ...errors,
         general: "Network error. Please check your connection and try again",
@@ -120,6 +111,17 @@ function NewPassword() {
       setIsloading(false);
     }
   }
+
+  useEffect(() => {
+    if (!email && !token) {
+      setErrors({
+        ...errors,
+        general:
+          "Email information is missing. The reset link might be incomplete",
+      });
+    }
+  }, [email, token, errors]);
+
   return (
     <main className="grid lg:grid-cols-2 grid-cols-1">
       <div className="relative">
@@ -140,6 +142,11 @@ function NewPassword() {
               <Spinner />
             </div>
           )}
+          {/* {errors.general && (
+            <div className="mt-3 text-red-500 text-center">
+              {errors.general}
+            </div>
+          )} */}
           <form
             action="#"
             className="flex flex-col justify-center items-center w-full mt-8 gap-6 lg:px-0 px-4"
@@ -170,6 +177,9 @@ function NewPassword() {
                   )}
                 </button>
               </div>
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+              )}
             </div>
             <div className="lg:w-[55%] w-full">
               <label htmlFor="#">Confirm new password</label>
@@ -199,6 +209,11 @@ function NewPassword() {
                   )}
                 </button>
               </div>
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.confirmPassword}
+                </p>
+              )}
             </div>
 
             <button className="bg-[#057B7B] rounded-full lg:py-4 lg:px-[8rem] py-2 px-[4rem] text-white font-semibold">

@@ -65,9 +65,11 @@ function ResetMessage() {
     ) {
       emailUrl = "https://outlook.live.com";
     } else {
-      emailUrl = "https://mail.google.com"; // Default to Gmail
+      // Default to webmail generic page if unknown
+      emailUrl = "https://mail.google.com";
     }
 
+    // Open the email provider's login page
     window.open(emailUrl, "_blank");
   }
 
