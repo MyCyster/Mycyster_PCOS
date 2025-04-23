@@ -1,6 +1,7 @@
 import Report from "../components/profile/Report";
 import UpdatePassword from "../components/profile/UpdatePassword";
-export default function Profile() {
+
+export const Profile = () => {
   return (
     <div className="w-full flex flex-col lg:flex-row lg:justify-between lg:gap-x-6">
       <div className="w-full lg:w-[65%]">
@@ -53,4 +54,4 @@ export default function Profile() {
       </>
     </div>
   );
-}
+};
