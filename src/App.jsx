@@ -1,13 +1,14 @@
 import AuthRoutes from "./components/authentication/Auth";
 import { HomeDashboard } from "./pages/HomeDashboard";
 import { Home } from "./components/LandingHome/Home";
-import { MoodTrackerPage } from "./components/MoodTracker/MoodTrackerPage";
+import { MoodTrackerPage } from "./pages/MoodTrackerPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { AppHome } from "./components/AppHome";
 import { DietaryPlannerPage } from "./pages/DietaryPlannerPage";
 import { Profile } from "./pages/profile";
 import { MealPlanner } from "./pages/MealPlanner";
+
 function App() {
   return (
     <>
