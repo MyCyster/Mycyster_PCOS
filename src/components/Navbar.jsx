@@ -26,14 +26,22 @@ export const Navbar = () => {
         >
           Features
         </AnchorLink>
-
-        <Link
-          onClick={() => window.open("https://medium.com/@mycyster", "_blank")}
+        <a
+          href="https://medium.com/@mycyster"
+          target="_blank"
+          rel="noopener noreferrer"
+          className=""
         >
           Resources
-        </Link>
-
-        <Link className="">Join the Community</Link>
+        </a>
+        <a
+          href="https://chat.whatsapp.com/K97c8rTtClXB85n7IgqeR4"
+          target="_blank"
+          rel="noopener noreferrer"
+          className=""
+        >
+          Join the Community
+        </a>
       </div>
 
       <Link to={"/auth/signup"}>

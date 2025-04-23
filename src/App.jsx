@@ -1,12 +1,13 @@
 import AuthRoutes from "./components/authentication/Auth";
-import { HomeDashboard } from "./components/dashboard/HomeDashboard";
+import { HomeDashboard } from "./pages/HomeDashboard";
 import { Home } from "./components/LandingHome/Home";
-import { MoodTrackerPage } from "./components/MoodTracker/MoodTrackerPage"
+import { MoodTrackerPage } from "./components/MoodTracker/MoodTrackerPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { AppHome } from "./components/AppHome"
-import { DietaryPlannerPage } from "./components/DietaryPlanner/DietaryPlannerPage";
-
+import { AppHome } from "./components/AppHome";
+import { DietaryPlannerPage } from "./pages/DietaryPlannerPage";
+import { Profile } from "./pages/profile";
+import { MealPlanner } from "./pages/MealPlanner";
 function App() {
   return (
     <>
@@ -14,10 +15,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/auth/*" element={<AuthRoutes />} />
-          <Route path="/" element={<AppHome/>}>
+          <Route element={<AppHome />}>
             <Route path="dashboard" element={<HomeDashboard />} />
             <Route path="dietaryplanner" element={<DietaryPlannerPage />} />
             <Route path="moodtracker" element={<MoodTrackerPage />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="mealplanner" element={<MealPlanner />} />
           </Route>
         </Routes>
       </Router>
