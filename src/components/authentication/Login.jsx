@@ -85,7 +85,7 @@ function Login() {
         } else {
           localStorage.removeItem("userData");
         }
-        navigate("/");
+        navigate("/dashboard");
       } else {
         if (data.message) {
           toast.error(data.message);
