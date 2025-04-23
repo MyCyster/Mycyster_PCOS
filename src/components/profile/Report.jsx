@@ -6,7 +6,7 @@ export default function Report() {
       </h3>
       <div className="bg-[#FEF8FC] border border-[#FCCEEE] h-40 rounded-2xl px-3 py-3 relative ">
         <img
-          src="../../public/calories.png"
+          src="/calories.png"
           width={150}
           height={150}
           className="absolute right-0 bottom-0 "
@@ -23,7 +23,7 @@ export default function Report() {
       </div>
       <div className="bg-[#E9FFFF] border border-[##C5F2F2] h-40 rounded-2xl px-3 py-3 relative mt-6">
         <img
-          src="../../public/Superawesomeemoji.png"
+          src="/Superawesomeemoji.png"
           width={140}
           height={140}
           className="absolute right-0 bottom-0 "
