@@ -44,9 +44,9 @@ export const Navbar = () => {
         </a>
       </div>
 
-      <Link to={"/auth/signup"}>
+      <Link to={"/auth/login"}>
         <Button className="bg-[#ffffff] hidden md:block text-[#057B7B] ">
-          Get Started
+          Login
         </Button>
       </Link>
 

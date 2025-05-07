@@ -15,8 +15,10 @@ export const Hero = () => {
           community to manage PCOS with confidence.
         </p>
 
-        <Link to={"/auth/login"}>
-          <Button className="mt-8 bg-[#057B7B] text-[#ffffff]">Join Now</Button>
+        <Link to={"/auth/signup"}>
+          <Button className="mt-8 bg-[#057B7B] text-[#ffffff]">
+            Get Started
+          </Button>
         </Link>
       </div>
 

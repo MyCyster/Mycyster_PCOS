@@ -8,9 +8,9 @@ import { Banner } from "../components/MoodTracker/Banner";
 
 export const HomeDashboard = () => {
   return (
-    <section className="flex flex-col flex-1  px-4">
+    <section className="flex flex-col flex-1 ">
       <Greeting />
-      <Banner />
+      {/* <Banner /> */}
       <SurveyLink />
       <div className="lg:hidden mb-8">
         <MobileAffirmation />
