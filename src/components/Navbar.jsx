@@ -93,7 +93,7 @@ export const Navbar = () => {
           <div className="w-full border-b p-6">
             <AnchorLink
               spy={true}
-              to="faq"
+              to="pcosSolution"
               smooth={true}
               duration={500}
               className="cursor-pointer w-full text-center"
@@ -103,7 +103,14 @@ export const Navbar = () => {
           </div>
 
           <div className="w-full border-b p-6">
-            <Link className="w-full text-center">Join the Community</Link>
+            <a
+              href="https://chat.whatsapp.com/K97c8rTtClXB85n7IgqeR4"
+              target="_blank"
+              rel="noopener noreferrer"
+              className=""
+            >
+              Join the Community
+            </a>
           </div>
 
           <div className="w-full p-6">
