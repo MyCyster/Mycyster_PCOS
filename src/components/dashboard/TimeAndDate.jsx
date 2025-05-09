@@ -39,7 +39,7 @@ export const TimeAndDate = () => {
 
   return (
     <div className="lg:flex items-end justify-between  font-manrope ">
-      <p className="font-semibold text-[#000000] text-xl  lg:text-2xl mt-6 lg:mt-0">
+      <p className="font-semibold text-[#000000] text-xl  lg:text-xl mt-6 lg:mt-0">
         Hello {user?.name}
       </p>
       <span className="hidden lg:block text-lg font-normal">
