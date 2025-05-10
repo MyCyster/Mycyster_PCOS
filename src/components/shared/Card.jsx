@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 export const Card = (props) => {
     return (
         <div className="my-6">
-            <div className="border rounded-t-lg flex justify-between py-5 px-6">
+            <div className="border rounded-t-lg flex justify-between items-center py-3 px-6">
                 <div>
-                    <h2 className="text-2xl font-bold font-">{props.cardTitle}</h2>
+                    <h2 className="text-lg font-semibold font-inter">{props.cardTitle}</h2>
                 </div>
                 <div>
                     {props.cardAction}

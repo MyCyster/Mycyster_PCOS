@@ -67,8 +67,8 @@ export default {
   plugins: [
     function({addUtilities}) {
       addUtilities({
-        ".title": {"@apply text-2xl font-bold pt-4 font-inter": {}},
-        ".sub-title": {"@apply text-xl font-inter": {}}
+        ".title": {"@apply text-lg font-bold pt-4 font-inter": {}},
+        ".sub-title": {"@apply font-inter": {}}
       })
     }
   ],

@@ -15,16 +15,17 @@ import { moodUrls } from "./MoodService"
 import { Select, SelectButton, SelectOptions } from "../shared/Select"
 import { EmptyState } from "../shared/EmptyState"
 
-// email: gecari9512@macho3.com
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGVjMTQxOS0zZDBiLTRkZTktODFhOS0zNWU5N2ExMDMwZWEiLCJlbWFpbCI6ImdlY2FyaTk1MTJAbWFjaG8zLmNvbSIsImlhdCI6MTc0MzEwMzQ5NCwiZXhwIjoxNzQzMjc2Mjk0fQ.cK3imKgwTeM3ElygPl8EFMgLcqJyc8E867ds_ihqlNw'
+// email: jane123@example.com
 export const MoodTrackerPage = () => {
 
     const [moodHistory, setMoodHistory] = useState([])
+    const [moodStats, setMoodStats] = useState([12, 19, 3, 5, 2, 10, 15, 4, 16])
     const [historyUpdated, setHistoryUpdated] = useState(0)
     const [isFetching, setIsFetching] = useState(false)
     const [logMoodClicked, setLogMoodClicked] = useState(0)
     const [isMHFilterLoading, setIsMHFilterLoading] = useState(false)
     const [queryParams, setQueryParams] = useState(new URLSearchParams({}).toString())
+    const [queryParamsStat, setQueryParamsStat] = useState(new URLSearchParams({}).toString())
     const logMoodBtn = useRef(null)
 
    useEffect(() => {
@@ -32,7 +33,7 @@ export const MoodTrackerPage = () => {
         const signal = controller.signal;  
 
         const fetchData = async () => {
-            if (!token) {
+            if (!moodUrls.token) {
                 toast.error(`Not authenticated.`);
                 return;
             }
@@ -44,7 +45,7 @@ export const MoodTrackerPage = () => {
                     method: "GET",
                     headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
+                    "Authorization": `Bearer ${moodUrls.token}`
                     },
                     signal: signal,
                 });
@@ -85,9 +86,51 @@ export const MoodTrackerPage = () => {
     
         fetchData();
         return () => {
-            controller.abort();  // Abort the request if the component is unmounted
+            controller.abort(); 
         };
     }, [historyUpdated, queryParams])
+
+    useEffect(() => {
+        const controller = new AbortController(); 
+        const signal = controller.signal;  
+
+        const fetchData = async () => {
+            if (!moodUrls.token) {
+                toast.error(`Not authenticated.`);
+                return;
+            }
+
+            setIsFetching(true)
+    
+            try {
+                const response = await fetch(`${moodUrls.moodTrackerStat}?${queryParamsStat}`, {
+                    method: "GET",
+                    headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${moodUrls.token}`
+                    },
+                    signal: signal,
+                });
+                
+                const result = await response.json();
+                
+                setMoodStats(result.data);
+            } catch (err) {
+                if (err.name === "AbortError") {
+                    console.log("Fetch request was aborted");
+                } else {
+                    toast.error(err.message);
+                }
+            } finally {
+                setIsFetching(false)
+            }
+        };
+    
+        fetchData();
+        return () => {
+            controller.abort(); 
+        };
+    }, [historyUpdated, queryParamsStat])
 
     useEffect(() => {
         if (logMoodClicked > 0 && logMoodBtn.current !== null) {
@@ -97,6 +140,47 @@ export const MoodTrackerPage = () => {
             setLogMoodClicked(0); 
         };
     }, [logMoodClicked])
+
+    const downloadHistory = async () => {
+        const controller = new AbortController(); 
+        const signal = controller.signal;
+        try {
+            const response = await fetch(`${moodUrls.moodTrackerDownload}`, {
+                method: "GET",
+                headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${moodUrls.token}`
+                },
+                signal: signal,
+            });
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'moods.csv'; // or .xlsx if backend returns Excel
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+            
+            // const result = await response.json();
+
+            // console.log('seee resukt', result);
+            
+            
+            // setMoodStats(result.data);
+        } catch (err) {
+            if (err.name === "AbortError") {
+                console.log("Fetch request was aborted");
+            } else {
+                toast.error(err.message);
+            }
+        } finally {
+            // setIsFetching(false)
+        }
+    }
 
     const cleanObject = (obj) => {
         return Object.fromEntries(
@@ -127,9 +211,9 @@ export const MoodTrackerPage = () => {
         return (
             <div className='flex items-center gap-4 font-medium text-sm font-manrope'>
                 <Select>
-                    <SelectButton className='gap-2 px-8 py-3'>
+                    <SelectButton className='gap-2 px-4 py-2'>
                         <MdFilterList size={16}/>
-                        <p>Filter</p>
+                        <p className='hidden lg:inline-block'>Filter</p>
                     </SelectButton>
                     <SelectOptions>
                         <form action={handleMHFilter} className='flex flex-col gap-4'>
@@ -153,15 +237,15 @@ export const MoodTrackerPage = () => {
                             </div>
                             
                             <Button className="flex items-center justify-center gap-2 bg-primary text-white border border-primary rounded-xl font-bold text-base w-full mt-4 px-0 hover:shadow-lg hover:bg-primary-300">
-                                <ClipLoader color="#069494" size={16} loading={isMHFilterLoading}/>
+                                <ClipLoader color="#ffffff" size={16} loading={isMHFilterLoading}/>
                                 Filter
                             </Button>
                         </form>
                     </SelectOptions>
                 </Select>
-                <Button className="flex items-center gap-2 bg-primary font-semibold transition text-white px-4 rounded-xl hover:shadow-lg hover:bg-primary-300">
+                <Button onClick={downloadHistory} className="flex items-center gap-2 bg-primary font-medium transition text-white px-4 !py-2 rounded-xl hover:shadow-lg hover:bg-primary-300">
                     <LuCloudDownload size={16}/>
-                    Download Report
+                    <span className='hidden lg:inline-block'>Download</span>Report
                 </Button>
             </div>
         )
@@ -173,7 +257,7 @@ export const MoodTrackerPage = () => {
             <p className='sub-title'>How are you feeling today?</p>
             <EmojiBanner updateHistory={() => setHistoryUpdated(prev => prev + 1)} ref={logMoodBtn}/>
             <Card cardTitle="Mood Trend" cardAction={<MoodTrendFilter/>} >
-                <BarChart emptyState={
+                <BarChart values={moodStats} emptyState={
                     <EmptyState
                         header={isFetching ? 'Mood Trend' : 'Your Mood Trend is Unavailable'}
                         subheader={isFetching ? `Mood trend is loading...` : `Start logging your mood to get access to your mood trend`}
