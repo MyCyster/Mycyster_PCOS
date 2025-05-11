@@ -62,7 +62,7 @@ export const Footer = () => {
               />
 
               <Button className="bg-[#069494] mt-2 sm:mt-0 sm:bg-[#ffffff] font-semibold transition hover:bg-[#069494] hover:text-[#ffffff] text-[#ffffff] sm:text-[#069494]">
-                Get Started
+                Subscribe
               </Button>
             </div>
           </div>

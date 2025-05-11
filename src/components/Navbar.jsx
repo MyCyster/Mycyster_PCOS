@@ -3,12 +3,12 @@ import { useState } from "react";
 import { Button } from "./shared/Button";
 import { Link } from "react-router-dom";
 import { Link as AnchorLink } from "react-scroll";
-
+import { X, Menu } from "lucide-react";
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="navbar relative z-50 py-6 px-[2rem] lg:px-[5rem] flex justify-between items-center -z-100 ">
+    <nav className="navbar px-6 lg:px-20 shadow-md  relative z-50 py-6 lg:py-6  flex justify-between items-center -z-100 lg:shadow-none ">
       <div className="">
         <img
           src={myCystLogo}
@@ -17,7 +17,7 @@ export const Navbar = () => {
         />
       </div>
 
-      <div className="hidden border border-[#057B7B] py-4 px-10 rounded-full text-[14px] lg:text-[16px] md:flex gap-[1.5rem] lg:gap-[4rem] xl:gap-[7rem] text-[#057B7B] bg-gradient-to-r from-white via-[#E3F4F4] to-[#A0CFCF] ">
+      <div className="hidden border border-[#057B7B] py-4 px-10 rounded-full text-[14px] lg:text-[16px] md:flex gap-[1.5rem] lg:gap-[2rem] xl:gap-[4rem] text-[#057B7B] bg-gradient-to-r from-white via-[#E3F4F4] to-[#A0CFCF] ">
         <AnchorLink
           spy={true}
           smooth={true}
@@ -26,19 +26,36 @@ export const Navbar = () => {
         >
           Features
         </AnchorLink>
-
-        <Link
-          onClick={() => window.open("https://medium.com/@mycyster", "_blank")}
+        <a
+          href="https://medium.com/@mycyster"
+          target="_blank"
+          rel="noopener noreferrer"
+          className=""
         >
           Resources
-        </Link>
-
-        <Link className="">Join the Community</Link>
+        </a>
+        <AnchorLink
+          spy={true}
+          smooth={true}
+          to="pcosSolution"
+          className="cursor-pointer"
+          duration={500}
+        >
+          FAQs
+        </AnchorLink>
+        <a
+          href="https://chat.whatsapp.com/K97c8rTtClXB85n7IgqeR4"
+          target="_blank"
+          rel="noopener noreferrer"
+          className=""
+        >
+          Join the Community
+        </a>
       </div>
 
-      <Link to={"/auth/signup"}>
+      <Link to={"/auth/login"}>
         <Button className="bg-[#ffffff] hidden md:block text-[#057B7B] ">
-          Get Started
+          Login
         </Button>
       </Link>
 
@@ -46,38 +63,61 @@ export const Navbar = () => {
         onClick={() => setIsOpen(!isOpen)}
         className="md:hidden text-[32px] text-gray-700"
       >
-        ☰
+        {isOpen ? <X size={30} /> : <Menu size={30} />}
       </button>
 
       {isOpen && (
-        <div className="absolute top-16 left-0 w-full bg-white shadow-md flex flex-col items-center md:hidden">
-          <AnchorLink
-            spy={true}
-            smooth={true}
-            to="pcosSolution"
-            className="cursor-pointer py-1 sm:py-2 text-gray-700 hover:text-teal-600"
-          >
-            Features
-          </AnchorLink>
+        <div className="absolute  px-6 shadow-sm top-full z-50  left-0 w-full bg-white  flex flex-col text-center justify-center items-center md:hidden  text-lg font-extrabold text-[#046363]">
+          <div className="w-full border-b p-6">
+            <AnchorLink
+              spy={true}
+              smooth={true}
+              to="pcosSolution"
+              className="cursor-pointer w-full text-center"
+            >
+              Features
+            </AnchorLink>
+          </div>
 
-          <Link
-            onClick={() =>
-              window.open("https://medium.com/@mycyster", "_blank")
-            }
-            className="py-1 sm:py-2 text-gray-700 hover:text-teal-600"
-          >
-            Resources
-          </Link>
+          <div className="w-full border-b p-6">
+            <Link
+              onClick={() =>
+                window.open("https://medium.com/@mycyster", "_blank")
+              }
+              className="w-full text-center"
+            >
+              Resources
+            </Link>
+          </div>
 
-          <Link className="py-1 sm:py-2 text-gray-700 hover:text-teal-600">
-            Join the Community
-          </Link>
+          <div className="w-full border-b p-6">
+            <AnchorLink
+              spy={true}
+              to="pcosSolution"
+              smooth={true}
+              duration={500}
+              className="cursor-pointer w-full text-center"
+            >
+              FAQs
+            </AnchorLink>
+          </div>
 
-          <Link to={"/auth/signup"}>
-            <Button className="my-2 px-7 py-[10px] sm:py-2 bg-[#057B7B] text-[#ffffff]">
-              Get Started
-            </Button>
-          </Link>
+          <div className="w-full border-b p-6">
+            <a
+              href="https://chat.whatsapp.com/K97c8rTtClXB85n7IgqeR4"
+              target="_blank"
+              rel="noopener noreferrer"
+              className=""
+            >
+              Join the Community
+            </a>
+          </div>
+
+          <div className="w-full p-6">
+            <Link to={"/auth/login"}>
+              <Button className="bg-[#057B7B] text-white w-full">Login</Button>
+            </Link>
+          </div>
         </div>
       )}
     </nav>

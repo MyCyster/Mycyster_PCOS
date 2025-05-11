@@ -71,8 +71,24 @@ function Login() {
         }
       );
       const data = await res.json();
-
       if (res.ok) {
+        // Store the tokens and user data in localStorage
+        if (data.tokens) {
+          localStorage.setItem("access_token", data.tokens.access_token);
+          localStorage.setItem("refresh_token", data.tokens.refresh_token);
+        }
+        // Store user data
+        if (data.id && data.name && data.email) {
+          localStorage.setItem(
+            "userData",
+            JSON.stringify({
+              id: data.id,
+              name: data.name,
+              email: data.email,
+            })
+          );
+        }
+
         // saved user data before navigating if "Remember Me" is checked
         if (rememberMe) {
           localStorage.setItem(
@@ -85,7 +101,7 @@ function Login() {
         } else {
           localStorage.removeItem("userData");
         }
-        navigate("/");
+        navigate("/dashboard");
       } else {
         if (data.message) {
           toast.error(data.message);

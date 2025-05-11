@@ -5,16 +5,16 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import ClipLoader from "react-spinners/ClipLoader";
 import "react-toastify/dist/ReactToastify.css";
-import { moodUrls } from '../MoodTracker/MoodService'
+import { moodUrls } from "../MoodTracker/MoodService";
 
 export const EmojiBanner = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [toggleBanner, setToggleBanner] = useState(false);
     
 
-    const submitMood = async(formData) => {
-        setIsLoading(true);
-        const data = Object.fromEntries(formData.entries())
+  const submitMood = async (formData) => {
+    setIsLoading(true);
+    const data = Object.fromEntries(formData.entries());
 
         try {
             const response = await fetch(moodUrls.moodTracker, {
@@ -26,17 +26,17 @@ export const EmojiBanner = (props) => {
                 body: JSON.stringify(data),
             });
 
-            const result = await response.json();
-    
-            console.log('returned data', result);
-            toast.success(result.message);
-            props.updateHistory()
-        } catch (err) {
-            toast.error(err.message);
-        } finally {
-            setIsLoading(false);
-        }
+      const result = await response.json();
+
+      console.log("returned data", result);
+      toast.success(result.message);
+      props.updateHistory();
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setIsLoading(false);
     }
+  };
 
     const EmojiForm = () => (
         <div className={`${toggleBanner ? 'block' : 'hidden'} lg:block p-6 rounded-2xl bg-primary my-8`}>
@@ -109,9 +109,9 @@ export const EmojiBanner = (props) => {
 }
 
 EmojiBanner.propTypes = {
-    updateHistory: PropTypes.func.isRequired,
-    ref: PropTypes.oneOfType([
-        PropTypes.func,
-        PropTypes.shape({ current: PropTypes.any })
-    ])
+  updateHistory: PropTypes.func.isRequired,
+  ref: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.any }),
+  ]),
 };

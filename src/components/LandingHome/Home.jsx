@@ -8,14 +8,16 @@ import { SecondSection } from "./SecondSection";
 
 export const Home = () => {
   return (
-    <div>
+    <div className="relative">
       <Navbar />
-      <Hero />
-      <SecondSection />
-      <PcosSolution />
-      <LatestArticles />
-      <Accordion />
-      <Footer />
+      <div>
+        <Hero />
+        <SecondSection />
+        <PcosSolution />
+        <LatestArticles />
+        <Accordion />
+        <Footer />
+      </div>
     </div>
   );
 };

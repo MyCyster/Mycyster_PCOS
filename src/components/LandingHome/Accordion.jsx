@@ -32,7 +32,7 @@ Improving app features and fixing bugs
 Adding or reviewing medical content
 Designing a user-friendly interface
 Spreading awareness about MyCyster
-If you're interested, visit MyCyster’s GitHub repository or join the contributor community for more details.
+If you're interested, visit MyCyster's GitHub repository or join the contributor community for more details.
 `,
   },
 ];
@@ -40,7 +40,7 @@ If you're interested, visit MyCyster’s GitHub repository or join the contribut
 function Accordion() {
   const [openIndex, setOpenIndex] = useState(null);
   return (
-    <section>
+    <section id="faqs">
       <h1 className="font-sora font-[700] text-3xl text-[#12141D] text-center mb-10">
         Frequently Asked Questions
       </h1>
