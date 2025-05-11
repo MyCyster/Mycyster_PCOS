@@ -1,5 +1,6 @@
 export const moodUrls = {
-    moodHistory: `https://mycyster-backend.onrender.com/v1/mood-tracker/history`,
-    moodTracker: `https://mycyster-backend.onrender.com/v1/mood-tracker`
-
+    moodHistory: `/mood-tracker/history`,
+    moodTracker: `/mood-tracker`,
+    moodTrackerStat: `/mood-tracker/stats`,
+    moodTrackerDownload: `/mood-tracker/download`,
 }

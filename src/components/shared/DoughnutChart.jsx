@@ -14,7 +14,7 @@ export const DoughnutChart = () => {
                     "rgba(224, 245, 230, 1)"
                 ],
                 borderWidth: 0,
-                cutout: "80%", 
+                cutout: "75%", 
                 borderRadius: 10, 
                 circumference: 360, 
                 rotation: 225, 
@@ -32,11 +32,11 @@ export const DoughnutChart = () => {
     };
 
     return (
-        <div className="relative w-64 h-64">
+        <div className="relative w-40 h-40">
             <Doughnut data={data} options={options} />
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <p className="text-gray-600 text-lg">Calorie Goal</p>
-                <p className="text-black text-2xl font-bold">2,100 Kcal</p>
+                <p className="text-gray-600 text-sm">Calorie Goal</p>
+                <p className="text-black text-lg font-bold">2,100 Kcal</p>
             </div>
         </div>
     );

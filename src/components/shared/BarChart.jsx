@@ -24,9 +24,11 @@ ChartJS.register(
   ChartDataLabels
 );
 
-export const BarChart = ({emptyState}) => {
+export const BarChart = ({values, emptyState}) => {
 
-    const dataValues = [12, 19, 3, 5, 2, 10, 15, 4, 16]
+    const dataValues = moodEmojis.map(item => values?.[item.emoji])
+    console.log('values', values);
+    
     // const dataValues = []
     // const total = dataValues.reduce((a, b) => a + b, 0);
     const data = {
@@ -87,5 +89,6 @@ export const BarChart = ({emptyState}) => {
 }
 
 BarChart.propTypes = {
-    emptyState: PropTypes.node
+    emptyState: PropTypes.node,
+    values: PropTypes.array
 };
