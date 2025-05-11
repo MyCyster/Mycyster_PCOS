@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import emptyDietaryState from "../../assets/emptyDietaryState.png"
 import { DrawerModal } from "../shared/DrawerModal";
+import api from '../../lib/axios';
 
 export const DietaryPlannerPage = () => {
 
@@ -31,28 +32,35 @@ export const DietaryPlannerPage = () => {
 
     const mealOptions = ["Breakfast", "Lunch", "Dinner", "Snack"];
 
+    console.log('returned calling data1111===');
+
 
     useEffect(() => {
         const controller = new AbortController(); 
         const signal = controller.signal;  
+
+        console.log('returned calling data1111');
 
         const fetchData = async () => {
 
             setIsMealPlanLoading(true)
     
             try {
-                const response = await fetch(`${dietaryUrls.mealPlan}?${queryParams}`, {
-                    method: "GET",
-                    headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${dietaryUrls.token}`
-                    },
-                    signal: signal,
-                });
+                console.log('returned calling data');
+
+                const response = await api.get(`${dietaryUrls.mealPlan}?${queryParams}`, {signal});
+                // const response = await fetch(`${dietaryUrls.mealPlan}?${queryParams}`, {
+                //     method: "GET",
+                //     headers: {
+                //     "Content-Type": "application/json",
+                //     "Authorization": `Bearer ${dietaryUrls.token}`
+                //     },
+                //     signal: signal,
+                // });
                 
-                const result = await response.json();
+                // const result = await response.json();
                 let transformedData = []
-                if(result.mealPlans){
+                if(response.mealPlans){
                     // transformedData = await result.data.map((item, i) => {
                     //     const dateObj = new Date(item.created_at);
                     //     const date = dateObj.toISOString().split("T")[0]; 
@@ -85,7 +93,7 @@ export const DietaryPlannerPage = () => {
                 //     "updated_at": "2025-04-08T13:59:51.871Z"
                 // }
 
-                console.log('returned data', result, transformedData);
+                console.log('returned data', response, transformedData);
                 
                 setMealPlans(transformedData);
             } catch (err) {

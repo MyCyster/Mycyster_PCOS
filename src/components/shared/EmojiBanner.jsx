@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import ClipLoader from "react-spinners/ClipLoader";
 import "react-toastify/dist/ReactToastify.css";
 import { moodUrls } from "../MoodTracker/MoodService";
+import api from '../../lib/axios';
 
 export const EmojiBanner = (props) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -17,26 +18,26 @@ export const EmojiBanner = (props) => {
     const data = Object.fromEntries(formData.entries());
 
         try {
-            const response = await fetch(moodUrls.moodTracker, {
-                method: "POST",
-                headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${moodUrls.token}`
-                },
-                body: JSON.stringify(data),
-            });
+            const response = await api.post(`${moodUrls.moodTracker}`, data);
+            // const response = await fetch(moodUrls.moodTracker, {
+            //     method: "POST",
+            //     headers: {
+            //     "Content-Type": "application/json",
+            //     "Authorization": `Bearer ${moodUrls.token}`
+            //     },
+            //     body: JSON.stringify(data),
+            // });
 
-      const result = await response.json();
-
-      console.log("returned data", result);
-      toast.success(result.message);
-      props.updateHistory();
-    } catch (err) {
-      toast.error(err.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+            console.log("returned data", response);
+            toast.success(response.message);
+            props.updateHistory();
+            setToggleBanner(false)
+        } catch (err) {
+            toast.error(err.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const EmojiForm = () => (
         <div className={`${toggleBanner ? 'block' : 'hidden'} lg:block p-6 rounded-2xl bg-primary my-8`}>
@@ -89,7 +90,7 @@ export const EmojiBanner = (props) => {
             </div>
         </div>
 
-        <EmojiForm/>
+        {!toggleBanner && <EmojiForm/>}
 
         {toggleBanner && (
             <div
