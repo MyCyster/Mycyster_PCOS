@@ -15,6 +15,16 @@ import { moodUrls } from "../components/MoodTracker/MoodService"
 import { Select, SelectButton, SelectOptions } from "../components/shared/Select"
 import { EmptyState } from "../components/shared/EmptyState"
 import api from '../lib/axios';
+import downlaodBanner from '../assets/downloadBanner.png'
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import Papa from 'papaparse';
+const moodEmojisSym = {
+  happy: '😊',
+  calm: '😌',
+  overwhelmed: '😭',
+  irritated: '😤',
+};
 
 // email: jane123@example.com
 export const MoodTrackerPage = () => {
@@ -28,6 +38,17 @@ export const MoodTrackerPage = () => {
   const [queryParams, setQueryParams] = useState(new URLSearchParams({}).toString())
   const [queryParamsStat, setQueryParamsStat] = useState(new URLSearchParams({}).toString())
   const logMoodBtn = useRef(null)
+  const [payload, setPayload] = useState([]);
+
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleDateString('en-GB');
+  };
+  
+  const formatTime = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  };
 
   useEffect(() => {
     const controller = new AbortController();
@@ -117,22 +138,21 @@ export const MoodTrackerPage = () => {
     };
   }, [logMoodClicked])
 
+  useEffect(() => {
+    if (payload.length > 0) {
+      downloadAsPDF();
+    }
+  }, [payload]);
+
   const downloadHistory = async () => {
     const controller = new AbortController();
     const signal = controller.signal;
     try {
       const response = await api.get(`${moodUrls.moodTrackerDownload}`, { signal });
 
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'moods.csv';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
+      const data = await parseCSV(response.data)
+      setPayload(data)
+      // await downloadAsPDF()
 
     } catch (err) {
       if (err.name === 'CanceledError') {
@@ -144,6 +164,27 @@ export const MoodTrackerPage = () => {
       // setIsFetching(false)
     }
   }
+
+  const downloadAsPDF = async () => {
+    const element = document.getElementById('mood-history-template');
+    const canvas = await html2canvas(element);
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const width = pdf.internal.pageSize.getWidth();
+    const height = (canvas.height * width) / canvas.width;
+    pdf.addImage(imgData, 'PNG', 0, 0, width, height);
+    pdf.save('mood-history.pdf');
+  };
+
+  const parseCSV = (csvText) => {
+    const parsed = Papa.parse(csvText, { header: true });
+    // Convert the Date string to actual Date objects
+    return parsed.data.map((entry) => ({
+      ...entry,
+      Date: new Date(entry.Date), // convert string to Date
+    }));
+  };
+
 
   const cleanObject = (obj) => {
     return Object.fromEntries(
@@ -244,6 +285,38 @@ export const MoodTrackerPage = () => {
             />
           } />
       </Card>
+
+      <div
+        id="mood-history-template"
+        className="absolute left-[-9999px] top-0 max-w-2xl mx-auto bg-white text-black rounded shadow"
+      >
+        <header className="text-center mb-6">
+          <div className='w-full'>
+            <img src={downlaodBanner} alt="myCyster" className='w-full object-cover'/>
+          </div>
+          <h2 className="text-xl font-semibold mt-4">Mood History</h2>
+          <p className="text-gray-500 text-sm">{new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}</p>
+        </header>
+
+        <div className="space-y-4 p-4">
+          {payload.map((history) => (
+            <div key={history.id} className="block border rounded-xl m-4">
+                <div className="grid grid-cols-3 divide-x border-b">
+                    <div className="text-center p-2 text-gray-500 capitalize">{history.Mood.charAt(0).toUpperCase() + history.Mood.slice(1)} {moodEmojisSym[history.Mood] || ''}</div>
+                    <div className="text-center p-2 text-gray-500">{formatDate(history.Date)}</div>
+                    <div className="text-center p-2 text-gray-500">{formatTime(history.Date)}</div>
+                </div>
+                <div className="p-4 text-gray-500">
+                    {history.Description}
+                </div>
+            </div>  
+          ))}
+        </div>
+      </div>
     </>
   )
 }
