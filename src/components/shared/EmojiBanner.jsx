@@ -62,7 +62,7 @@ export const EmojiBanner = (props) => {
                     ))}
                 </div>
                 <div className={`${toggleBanner ? 'w-full' : ''}`}>
-                    <textarea className="bg-white border border-primary rounded-xl w-full p-2" name="description" id="description" cols="30" rows="7" aria-label="Description" required></textarea>
+                    <textarea className="bg-white border border-primary rounded-xl w-full p-2" name="description" id="description" cols="30" rows="7" aria-label="Description"></textarea>
                     <Button className="flex items-center justify-center gap-2 bg-white text-primary border border-primary rounded-xl font-bold text-base w-full mt-4 hover:shadow-lg hover:bg-slate-100">
                         <ClipLoader color="#069494" size={16} loading={isLoading}/>
                         Log Mood
@@ -94,11 +94,11 @@ export const EmojiBanner = (props) => {
 
         {toggleBanner && (
             <div
-                className="fixed top-6 inset-0 bg-black bg-opacity-50 rounded-lg z-50"
+                className="fixed top-6 inset-0 bg-black bg-opacity-50 rounded-lg z-50 flex justify-center"
                 onClick={() => setToggleBanner(false)} // click backdrop closes modal
             >
                 <div
-                    className="bg-transparent max-w-sm w-full max-h-full overflow-y-auto shadow-lg"
+                    className="bg-transparent max-w-[85%] w-full max-h-full overflow-y-auto shadow-lg"
                     onClick={(e) => e.stopPropagation()} // prevent click inside modal from closing
                 >
                     <EmojiForm />
